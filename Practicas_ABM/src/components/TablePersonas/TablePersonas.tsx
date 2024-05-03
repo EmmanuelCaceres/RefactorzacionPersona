@@ -9,8 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { persona } from "../../types/persona";
-import GenericFetch from '../../services/GenericFetch';
+import { InterfacePersona } from "../../types/InterfacePersona";
+import { Persona } from '../../services/PersonaFetch';
+// import {GenericFetch} from '../../services/GenericFetch';
 // import { deleteData, getData } from "../../services/GenericFetch";
 import { ModalFormulario } from "../ModalFormulario/ModalFormulario";
 import swal from 'sweetalert2'
@@ -24,7 +25,7 @@ interface props {
 export const TablePersonas = (
   { setShowModal, ShowModal }: props
 ) => {
-  const generic = new GenericFetch();
+  const generic = new Persona();
 
   // URL de la API obtenida desde las variables de entorno
   const urlapi = import.meta.env.VITE_API_URL;
@@ -52,7 +53,7 @@ export const TablePersonas = (
   async function getDataPersonas() {
     setLoading(true);
     
-    await generic.getData<persona[]>(urlapi + 'api/personas')
+    await generic.getData<InterfacePersona[]>(urlapi + 'api/personas')
       .then((personaData) => {
         setPersonas(personaData);
         setLoading(false);

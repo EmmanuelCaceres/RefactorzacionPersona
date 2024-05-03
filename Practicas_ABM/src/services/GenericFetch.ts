@@ -1,6 +1,6 @@
 import AbstractGenerics from "./AbstractGenerics";
 
-class GenericFetch extends AbstractGenerics{
+export abstract class GenericFetch<T> extends AbstractGenerics<T>{
 
   // Función generica para obtener datos mediante una solicitud GET
  async getData<T>(path: string): Promise<T> {
@@ -74,4 +74,3 @@ class GenericFetch extends AbstractGenerics{
   }
 }
 
-export default GenericFetch;
