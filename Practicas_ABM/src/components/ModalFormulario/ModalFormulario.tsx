@@ -3,15 +3,16 @@ import { Button, Modal } from "react-bootstrap";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import TextFieldValue from "../TextFildValue/TextFildValue";
-import { persona } from "../../types/persona";
-import { postData, putData } from "../../services/GenericFetch";
+import { Persona } from "../../services/PersonaFetch";
+import { InterfacePersona } from "../../types/InterfacePersona";
+// import { postData, putData } from "../../services/GenericFetch";
 
 // Definición de las propiedades que recibe el componente
 interface props {
   showModal: boolean;
   handleClose: () => void;
   editing?: boolean;
-  persona?: persona;
+  persona?: InterfacePersona;
   getPersonas: Function;
 }
 
@@ -24,7 +25,7 @@ export const ModalFormulario = ({
   getPersonas,
 }: props) => {
   // Valores iniciales para el formulario
-  const initialValues: persona = {
+  const initialValues: InterfacePersona = {
     phoneNumber: "",
     adress: "",
     birthdate: "" as any,
@@ -32,7 +33,7 @@ export const ModalFormulario = ({
     firstName: "",
     lastName: "",
   };
-
+  const personaClass = new Persona();
   // URL de la API obtenida desde las variables de entorno
   const urlapi = import.meta.env.VITE_API_URL;
 
@@ -73,12 +74,12 @@ export const ModalFormulario = ({
             onSubmit={async (values) => {
 
               if (editing) {
-                await putData(
+                await personaClass.putData<InterfacePersona>(
                   urlapi + `api/personas/${persona?.id}`,
                   values
                 );
               } else {
-                await postData(
+                await personaClass.postData<InterfacePersona>(
                   urlapi + "api/personas",
                   values
                 );
